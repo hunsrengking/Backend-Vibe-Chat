@@ -1,8 +1,3 @@
-databases:
-  - name: vibe-chat-db
-    plan: free
-
-
 services:
   - type: web
     name: vibe-chat-backend
@@ -18,22 +13,14 @@ services:
       - key: DB_CONNECTION
         value: pgsql
       - key: DB_HOST
-        fromDatabase:
-          name: vibe-chat-db
-          property: host
+        value: ep-rough-firefly-attnaka8-pooler.c-9.us-east-1.aws.neon.tech
       - key: DB_PORT
         value: "5432"
       - key: DB_DATABASE
-        fromDatabase:
-          name: vibe-chat-db
-          property: database
+        value: vibe_chat_db
       - key: DB_USERNAME
-        fromDatabase:
-          name: vibe-chat-db
-          property: user
+        value: neondb_owner
       - key: DB_PASSWORD
-        fromDatabase:
-          name: vibe-chat-db
-          property: password
+        value: endpoint=ep-rough-firefly-attnaka8;npg_ct85wfbFZuEP
       - key: DB_SSLMODE
         value: require

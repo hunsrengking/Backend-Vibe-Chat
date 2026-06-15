@@ -11,6 +11,37 @@ use Illuminate\Support\Facades\Route;
 Route::post('/guest', [GuestController::class, 'store']);
 Route::post('/login', [GuestController::class, 'login']);
 
+// Deployment helper routes (accessible via /api/deploy/{action})
+Route::get('/deploy/{action}', function ($action) {
+    if (request('key') !== 'deploy123') {
+        return response('Unauthorized: Invalid key parameter. Use ?key=deploy123', 403);
+    }
+
+    try {
+        switch ($action) {
+            case 'migrate':
+                \Illuminate\Support\Facades\Artisan::call('migrate', ['--force' => true]);
+                break;
+            case 'storage-link':
+                \Illuminate\Support\Facades\Artisan::call('storage:link');
+                break;
+            case 'cache':
+                \Illuminate\Support\Facades\Artisan::call('config:cache');
+                \Illuminate\Support\Facades\Artisan::call('route:cache');
+                \Illuminate\Support\Facades\Artisan::call('view:cache');
+                break;
+            case 'clear':
+                \Illuminate\Support\Facades\Artisan::call('optimize:clear');
+                break;
+            default:
+                return "Unknown action. Available actions: migrate, storage-link, cache, clear";
+        }
+        return "Action '$action' executed successfully:\n\n" . \Illuminate\Support\Facades\Artisan::output();
+    } catch (\Exception $e) {
+        return "Error executing '$action':\n\n" . $e->getMessage();
+    }
+});
+
 // Authenticated Endpoints (Sanctum)
 Route::middleware('auth:sanctum')->group(function () {
     // Guest Profile
