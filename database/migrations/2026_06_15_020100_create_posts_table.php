@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
             $table->foreignId('guest_id')->constrained('guests')->onDelete('cascade');
-            $table->text('content');
+            $table->text('content')->nullable();
             $table->integer('likes_count')->default(0);
             $table->timestamps();
         });

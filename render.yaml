@@ -1,38 +1,39 @@
+databases:
+  - name: vibe-chat-db
+    plan: free
+    postgresVersion: 15
+
 services:
   - type: web
-    name: backend
-    region: oregon
-    buildCommand: |
-      composer install --no-dev --optimize-autoloader
-      php artisan config:cache
-      php artisan route:cache
-    startCommand: php artisan serve --host=0.0.0.0 --port=$PORT
+    name: vibe-chat-backend
+    env: docker
+    plan: free
     envVars:
       - key: APP_ENV
         value: production
       - key: APP_DEBUG
-        value: false
-      - key: APP_URL
-        value: https://vibe-chat-service.onrender.com
+        value: "false"
+      - key: APP_KEY
+        value: base64:pKDb3xXy3F4Prh+cTDaiSn8p3dEjosN5SpJEbUj98j0=base64:E/GohRh4YbOAOCZyFNMllWlv2cFbNqo6fiSJ94FPvVw=
       - key: DB_CONNECTION
         value: pgsql
       - key: DB_HOST
-        value: ${PGHOST}
+        fromDatabase:
+          name: vibe-chat-db
+          property: host
       - key: DB_PORT
-        value: ${PGPORT}
+        value: "5432"
       - key: DB_DATABASE
-        value: ${PGDATABASE}
+        fromDatabase:
+          name: vibe-chat-db
+          property: database
       - key: DB_USERNAME
-        value: ${PGUSER}
+        fromDatabase:
+          name: vibe-chat-db
+          property: user
       - key: DB_PASSWORD
-        value: ${PGPASSWORD}
+        fromDatabase:
+          name: vibe-chat-db
+          property: password
       - key: DB_SSLMODE
         value: require
-      - key: SANCTUM_STATEFUL_DOMAINS
-        value: https://vibechat-zeta.vercel.app
-      - key: SESSION_DRIVER
-        value: database
-      - key: CACHE_STORE
-        value: database
-      - key: QUEUE_CONNECTION
-        value: database

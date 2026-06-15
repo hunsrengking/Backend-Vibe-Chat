@@ -1,42 +1,35 @@
 FROM php:8.2-apache
 
-# Install system dependencies
+# Install system dependencies and PostgreSQL PDO extension
 RUN apt-get update && apt-get install -y \
     libpq-dev \
-    && docker-php-ext-install pdo pdo_pgsql \
-    && a2enmod rewrite
+    zip \
+    unzip \
+    git \
+    && docker-php-ext-install pdo pdo_pgsql
 
-# Install Composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+# Enable Apache mod_rewrite
+RUN a2enmod rewrite
+
+# Set Apache Document Root to Laravel's public directory
+ENV APACHE_DOCUMENT_ROOT /var/www/html/public
+RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
+RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
 
 # Set working directory
 WORKDIR /var/www/html
 
-# Copy application files
+# Copy all project files
 COPY . .
 
-# Install PHP dependencies
-RUN composer install --no-interaction --prefer-dist
+# Install Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+RUN composer install --no-dev --optimize-autoloader
 
-# Create storage directories and set permissions
-RUN mkdir -p storage/logs storage/framework/cache storage/framework/sessions storage/framework/views \
-    && chmod -R 777 storage bootstrap/cache
+# Set permissions for storage and bootstrap cache
+RUN chown -R www-data:www-data storage bootstrap/cache
 
-# Configure Apache to serve Laravel from public directory
-RUN echo '<Directory /var/www/html/public>' > /etc/apache2/sites-available/laravel.conf && \
-    echo '    Options Indexes FollowSymLinks' >> /etc/apache2/sites-available/laravel.conf && \
-    echo '    AllowOverride All' >> /etc/apache2/sites-available/laravel.conf && \
-    echo '    Require all granted' >> /etc/apache2/sites-available/laravel.conf && \
-    echo '</Directory>' >> /etc/apache2/sites-available/laravel.conf && \
-    echo 'DocumentRoot /var/www/html/public' >> /etc/apache2/sites-available/laravel.conf
+# Expose port 80
+EXPOSE 80
 
-RUN a2ensite laravel && a2dissite 000-default
-
-# Copy Apache config for Laravel
-RUN cp /etc/apache2/sites-available/laravel.conf /etc/apache2/sites-enabled/
-
-# Expose port
-EXPOSE 8000
-
-# Start Apache
-CMD ["apache2ctl", "-D", "FOREGROUND"]
+CMD ["apache2-foreground"]
