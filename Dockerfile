@@ -13,6 +13,7 @@ RUN a2enmod rewrite
 
 # Copy custom Apache virtual host configuration
 COPY apache-vhost.conf /etc/apache2/sites-available/000-default.conf
+COPY apache-vhost.conf /etc/apache2/sites-enabled/000-default.conf
 
 # Set working directory
 WORKDIR /var/www/html
