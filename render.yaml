@@ -24,3 +24,7 @@ services:
         value: "endpoint=ep-rough-firefly-attnaka8;npg_ct85wfbFZuEP"
       - key: DB_SSLMODE
         value: require
+      - key: SESSION_DRIVER
+        value: cookie
+      - key: CACHE_STORE
+        value: file
