@@ -1,9 +1,12 @@
 services:
   - type: web
     name: vibechat.service
-    env: docker
+    env: php
     plan: free
+    buildCommand: composer install --no-dev --optimize-autoloader
     envVars:
+      - key: DOCUMENT_ROOT
+        value: public
       - key: APP_ENV
         value: production
       - key: APP_DEBUG
