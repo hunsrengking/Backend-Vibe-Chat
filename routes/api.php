@@ -8,6 +8,9 @@ use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 
 // Public Endpoints
+Route::get('/health', function () {
+    return response()->json(['status' => 'alive', 'timestamp' => now()]);
+});
 Route::post('/guest', [GuestController::class, 'store']);
 Route::post('/login', [GuestController::class, 'login']);
 

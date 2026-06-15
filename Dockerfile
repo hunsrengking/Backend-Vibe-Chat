@@ -37,4 +37,5 @@ RUN php artisan storage:link
 # Expose port 80
 EXPOSE 80
 
-CMD ["sh", "-c", "php artisan migrate --force && apache2-foreground"]
+CMD ["sh", "-c", "php artisan migrate --force && (php ping.php &) && apache2-foreground"]
+

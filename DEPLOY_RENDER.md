@@ -60,3 +60,22 @@ Once the deployment is complete, visit the secure migration route in your browse
 To make your uploads work:
 👉 Visit: **`https://your-render-url.onrender.com/api/deploy/storage-link?key=deploy123`**
 
+---
+
+## Step 6: Auto-Sleep Prevention
+
+On Render's Free tier, the web service spins down after 15 minutes of inactivity. To prevent this, the app includes a built-in self-pinging service (`ping.php`) that runs in the background of the Docker container and pings `/api/health` every 10 minutes.
+
+### 1. Internal Pinger (Built-in)
+The `ping.php` script is run automatically on startup. It detects your app's URL from the environment variable `RENDER_EXTERNAL_URL` (automatically injected by Render) or `APP_URL`.
+* Check your Render service logs. You should see logs like:
+  `[Self-Ping] Ping successful! Response time: 45ms`
+
+### 2. External Pinger (Recommended for 100% Reliability)
+If the container goes to sleep for any reason (e.g. after an update or if the internal loop stops), the internal script cannot wake it up because the container is not running. 
+
+To ensure it never sleeps and starts up immediately even after system maintenance, we highly recommend setting up an external ping:
+1. Go to a free monitoring service like **[cron-job.org](https://cron-job.org/)** or **[UptimeRobot](https://uptimerobot.com/)**.
+2. Create a new monitor pointing to:
+   👉 **`https://your-render-url.onrender.com/api/health`** (the Laravel API health check route)
+3. Set the interval to every **10 minutes**.
