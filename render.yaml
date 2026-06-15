@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: vibe-chat-backend
+    name: vibechat.service
     env: docker
     plan: free
     envVars:
