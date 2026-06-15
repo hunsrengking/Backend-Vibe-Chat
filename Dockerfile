@@ -21,6 +21,9 @@ WORKDIR /var/www/html
 # Copy all project files
 COPY . .
 
+# Remove the root-level .htaccess (created for cPanel) so it doesn't cause a redirect loop in Docker
+RUN rm -f .htaccess
+
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 RUN composer install --no-dev --optimize-autoloader
