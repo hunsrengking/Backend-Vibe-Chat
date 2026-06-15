@@ -9,7 +9,7 @@ services:
       - key: APP_DEBUG
         value: "false"
       - key: APP_KEY
-        value: base64:pKDb3xXy3F4Prh+cTDaiSn8p3dEjosN5SpJEbUj98j0=base64:E/GohRh4YbOAOCZyFNMllWlv2cFbNqo6fiSJ94FPvVw=
+        value: base64:pKDb3xXy3F4Prh+cTDaiSn8p3dEjosN5SpJEbUj98j0=
       - key: DB_CONNECTION
         value: pgsql
       - key: DB_HOST
@@ -21,6 +21,6 @@ services:
       - key: DB_USERNAME
         value: neondb_owner
       - key: DB_PASSWORD
-        value: endpoint=ep-rough-firefly-attnaka8;npg_ct85wfbFZuEP
+        value: "endpoint=ep-rough-firefly-attnaka8;npg_ct85wfbFZuEP"
       - key: DB_SSLMODE
         value: require
