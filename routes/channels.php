@@ -38,3 +38,7 @@ Broadcast::channel('guest-notifications.{guestId}', function ($user, $guestId) {
 Broadcast::channel('direct-chat.{guestId}', function ($user, $guestId) {
     return (int) $user->id === (int) $guestId;
 });
+
+Broadcast::channel('call-signal.{id1}.{id2}', function ($user, $id1, $id2) {
+    return (int) $user->id === (int) $id1 || (int) $user->id === (int) $id2;
+});

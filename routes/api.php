@@ -6,6 +6,7 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\GuestController;
 use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Broadcast;
 
 // Public Endpoints
 Route::get('/health', function () {
@@ -47,6 +48,9 @@ Route::get('/deploy/{action}', function ($action) {
 
 // Authenticated Endpoints (Sanctum)
 Route::middleware('auth:sanctum')->group(function () {
+    // Register Broadcast Routes under /api/broadcasting/auth
+    Broadcast::routes();
+
     // Guest Profile
     Route::get('/guest', [GuestController::class, 'show']);
     Route::put('/guest', [GuestController::class, 'update']);
