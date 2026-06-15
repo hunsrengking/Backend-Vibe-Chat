@@ -31,6 +31,9 @@ RUN composer install --no-dev --optimize-autoloader
 # Set permissions for storage and bootstrap cache
 RUN chown -R www-data:www-data storage bootstrap/cache
 
+# Create storage link
+RUN php artisan storage:link
+
 # Expose port 80
 EXPOSE 80
 

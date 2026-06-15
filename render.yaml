@@ -21,7 +21,7 @@ services:
       - key: DB_USERNAME
         value: neondb_owner
       - key: DB_PASSWORD
-        value: "endpoint=ep-rough-firefly-attnaka8;npg_ct85wfbFZuEP"
+        value: npg_ct85wfbFZuEP
       - key: DB_SSLMODE
         value: require
       - key: SESSION_DRIVER
