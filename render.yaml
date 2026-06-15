@@ -1,12 +1,9 @@
 services:
   - type: web
     name: backend
-    runtime: php-8.2
     region: oregon
-    buildCommand: composer install --no-interaction --prefer-dist
-    startCommand: php artisan serve --host=0.0.0.0 --port ${PORT}
-    plan: starter
-    preDeployCommand: php artisan migrate --force && php artisan optimize:clear
+    dockerfilePath: Dockerfile
+    startCommand: ""
     healthCheckPath: /up
     envVars:
       - key: APP_ENV
