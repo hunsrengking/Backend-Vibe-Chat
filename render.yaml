@@ -1,7 +1,7 @@
 databases:
   - name: vibe-chat-db
     plan: free
-    postgresVersion: 15
+
 
 services:
   - type: web
