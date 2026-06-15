@@ -3,17 +3,18 @@ services:
     name: backend
     env: php
     region: oregon
-    root: backend
     buildCommand: composer install --no-interaction --prefer-dist
     startCommand: php artisan serve --host=0.0.0.0 --port ${PORT:-8000}
     plan: starter
+    preDeployCommand: php artisan migrate --force && php artisan optimize:clear
+    healthCheckPath: /up
     envVars:
       - key: APP_ENV
         value: production
       - key: APP_DEBUG
         value: false
       - key: APP_URL
-        value: https://your-backend.onrender.com
+        value: https://vibe-chat-service.onrender.com
       - key: DB_CONNECTION
         value: pgsql
       - key: DB_HOST
@@ -29,14 +30,10 @@ services:
       - key: DB_SSLMODE
         value: require
       - key: SANCTUM_STATEFUL_DOMAINS
-        value: https://your-frontend.vercel.app
+        value: https://vibechat-zeta.vercel.app
       - key: SESSION_DRIVER
         value: database
       - key: CACHE_STORE
         value: database
       - key: QUEUE_CONNECTION
         value: database
-    replicas: 1
-    public: true
-    healthCheckPath: /up
-    deployCommand: php artisan optimize:clear
