@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Storage;
 
 class ChatMessageResource extends JsonResource
 {
@@ -16,7 +17,7 @@ class ChatMessageResource extends JsonResource
             'id' => $this->id,
             'content' => $this->content,
             'group_chat_id' => $this->group_chat_id,
-            'media_url' => $this->media_path ? \Storage::disk(env('FILESYSTEM_DISK', 'public'))->url($this->media_path) : null,
+            'media_url' => $this->media_path ? Storage::disk(config('filesystems.media'))->url($this->media_path) : null,
             'media_type' => $this->media_type,
             'guest' => new GuestResource($this->whenLoaded('guest')),
             'created_at' => $this->created_at->toIso8601String(),

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class DirectMessage extends Model
 {
@@ -35,6 +36,6 @@ class DirectMessage extends Model
      */
     public function getMediaUrlAttribute()
     {
-        return $this->media_path ? \Storage::disk(env('FILESYSTEM_DISK', 'public'))->url($this->media_path) : null;
+        return $this->media_path ? Storage::disk(config('filesystems.media'))->url($this->media_path) : null;
     }
 }

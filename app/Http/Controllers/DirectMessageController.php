@@ -89,7 +89,7 @@ class DirectMessageController extends Controller
         ];
 
         if ($mediaFile) {
-            $path = $mediaFile->store('vibechat/direct_messages', env('FILESYSTEM_DISK', 'public'));
+            $path = $mediaFile->store('vibechat/direct_messages', config('filesystems.media'));
             $data['media_path'] = $path;
             
             $mime = $mediaFile->getClientMimeType();

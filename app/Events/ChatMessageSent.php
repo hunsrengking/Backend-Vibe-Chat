@@ -9,6 +9,7 @@ use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Storage;
 
 class ChatMessageSent implements ShouldBroadcast
 {
@@ -48,7 +49,7 @@ class ChatMessageSent implements ShouldBroadcast
             'id' => $this->message->id,
             'content' => $this->message->content,
             'group_chat_id' => $this->message->group_chat_id,
-            'media_url' => $this->message->media_path ? \Storage::disk(env('FILESYSTEM_DISK', 'public'))->url($this->message->media_path) : null,
+            'media_url' => $this->message->media_path ? Storage::disk(config('filesystems.media'))->url($this->message->media_path) : null,
             'media_type' => $this->message->media_type,
             'created_at' => $this->message->created_at->toIso8601String(),
             'guest' => [

@@ -34,7 +34,7 @@ class PostRepository implements PostRepositoryInterface
         // or simply order by likes_count and comments_count descending.
         return Post::with(['guest', 'likes'])
             ->withCount('comments')
-            ->orderByRaw('(likes_count + comments_count) DESC')
+            ->orderByRaw('likes_count + (select count(*) from comments where comments.post_id = posts.id) DESC')
             ->orderBy('created_at', 'desc')
             ->limit($limit)
             ->get();

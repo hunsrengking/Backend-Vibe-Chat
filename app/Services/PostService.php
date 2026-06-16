@@ -41,7 +41,7 @@ class PostService
 
         // Process media file if uploaded
         if ($mediaFile) {
-            $path = $mediaFile->store('vibechat/posts', env('FILESYSTEM_DISK', 'public'));
+            $path = $mediaFile->store('vibechat/posts', config('filesystems.media'));
             $data['media_path'] = $path;
             
             $mime = $mediaFile->getClientMimeType();
