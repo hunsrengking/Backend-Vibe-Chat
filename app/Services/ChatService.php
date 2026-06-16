@@ -35,7 +35,7 @@ class ChatService
 
         // Process media file if uploaded
         if ($mediaFile) {
-            $path = $mediaFile->store('chat', env('FILESYSTEM_DISK', 'public'));
+            $path = $mediaFile->store('vibechat/chat', env('FILESYSTEM_DISK', 'public'));
             $data['media_path'] = $path;
             
             // Auto detect or use provided media type
