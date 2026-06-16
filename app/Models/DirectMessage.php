@@ -35,6 +35,6 @@ class DirectMessage extends Model
      */
     public function getMediaUrlAttribute()
     {
-        return $this->media_path ? asset('storage/' . $this->media_path) : null;
+        return $this->media_path ? \Storage::disk(env('FILESYSTEM_DISK', 'public'))->url($this->media_path) : null;
     }
 }

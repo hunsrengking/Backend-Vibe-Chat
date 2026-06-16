@@ -17,7 +17,7 @@ class PostResource extends JsonResource
         return [
             'id' => $this->id,
             'content' => $this->content,
-            'media_url' => $this->media_path ? asset('storage/' . $this->media_path) : null,
+            'media_url' => $this->media_path ? \Storage::disk(env('FILESYSTEM_DISK', 'public'))->url($this->media_path) : null,
             'media_type' => $this->media_type,
             'likes_count' => $this->likes_count,
             'comments_count' => $this->comments_count ?? $this->comments()->count(),

@@ -41,7 +41,7 @@ class PostService
 
         // Process media file if uploaded
         if ($mediaFile) {
-            $path = $mediaFile->store('posts', 'public');
+            $path = $mediaFile->store('posts', env('FILESYSTEM_DISK', 'public'));
             $data['media_path'] = $path;
             
             $mime = $mediaFile->getClientMimeType();

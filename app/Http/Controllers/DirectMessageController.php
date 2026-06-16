@@ -89,7 +89,7 @@ class DirectMessageController extends Controller
         ];
 
         if ($mediaFile) {
-            $path = $mediaFile->store('direct_messages', 'public');
+            $path = $mediaFile->store('direct_messages', env('FILESYSTEM_DISK', 'public'));
             $data['media_path'] = $path;
             
             $mime = $mediaFile->getClientMimeType();

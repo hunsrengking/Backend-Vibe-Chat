@@ -48,7 +48,7 @@ class ChatMessageSent implements ShouldBroadcast
             'id' => $this->message->id,
             'content' => $this->message->content,
             'group_chat_id' => $this->message->group_chat_id,
-            'media_url' => $this->message->media_path ? \Storage::disk('public')->url($this->message->media_path) : null,
+            'media_url' => $this->message->media_path ? \Storage::disk(env('FILESYSTEM_DISK', 'public'))->url($this->message->media_path) : null,
             'media_type' => $this->message->media_type,
             'created_at' => $this->message->created_at->toIso8601String(),
             'guest' => [

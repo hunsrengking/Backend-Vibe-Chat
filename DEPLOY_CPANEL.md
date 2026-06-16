@@ -59,13 +59,13 @@ Since your cPanel terminal is currently hitting resource limits (**CageFS / LVE 
 Ensure your `.env` file is fully configured, then visit these URLs in your web browser:
 
 1. **Run Database Migrations**:
-   * Visit: `https://wupai.smartdigitalhr.com/deploy/migrate?key=deploy123`
+   * Visit: `https://wupai.smartdigitalhr.com/api/deploy/migrate?key=deploy123`
 2. **Create the Storage Link** (makes uploaded media/voice notes work):
-   * Visit: `https://wupai.smartdigitalhr.com/deploy/storage-link?key=deploy123`
+   * Visit: `https://wupai.smartdigitalhr.com/api/deploy/storage-link?key=deploy123`
 3. **Optimize & Cache Configuration**:
-   * Visit: `https://wupai.smartdigitalhr.com/deploy/cache?key=deploy123`
+   * Visit: `https://wupai.smartdigitalhr.com/api/deploy/cache?key=deploy123`
 4. **Clear Caches** (if you need to force a configuration reload later):
-   * Visit: `https://wupai.smartdigitalhr.com/deploy/clear?key=deploy123`
+   * Visit: `https://wupai.smartdigitalhr.com/api/deploy/clear?key=deploy123`
 
 ---
 

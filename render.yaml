@@ -28,3 +28,15 @@ services:
         value: cookie
       - key: CACHE_STORE
         value: file
+      - key: FILESYSTEM_DISK
+        value: cloudinary
+      - key: CLOUDINARY_URL
+        value: cloudinary://582813253846428:ypCSd7IA_BrE_CR4ZgwUAcGWHog@dhdnbxy8j
+      - key: CLOUDINARY_CLOUD_NAME
+        value: dhdnbxy8j
+      - key: CLOUDINARY_API_KEY
+        value: "582813253846428"
+      - key: CLOUDINARY_API_SECRET
+        value: ypCSd7IA_BrE_CR4ZgwUAcGWHog
+      - key: CLOUDINARY_PREFIX
+        value: vibechat
